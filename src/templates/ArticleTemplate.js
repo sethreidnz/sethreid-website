@@ -5,7 +5,7 @@ import { Link, graphql } from "gatsby";
 import Layout from "../components/Layout";
 import SEO from "../components/SEO";
 
-const BlogPostTemplate = ({ data, pageContext, location }) => {
+const ArticleTemplate = ({ data, pageContext, location }) => {
   const post = data.markdownRemark;
   const siteTitle = data.site.siteMetadata.title;
   const { previous, next } = pageContext;
@@ -47,7 +47,7 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
   );
 };
 
-export default BlogPostTemplate;
+export default ArticleTemplate;
 
 export const pageQuery = graphql`
   query BlogPostBySlug($slug: String!) {
