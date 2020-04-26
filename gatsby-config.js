@@ -1,16 +1,7 @@
+const siteConfig = require("./data/SiteConfig");
+
 module.exports = {
-  siteMetadata: {
-    title: `Seth Reid Website`,
-    author: {
-      name: `Seth Reid`,
-      summary: `Technologist, musician, writer and creative.`,
-    },
-    description: `For the writings of Seth Reid.`,
-    siteUrl: `https://sethreid.co.nz`,
-    social: {
-      twitter: `sethreidnz`,
-    },
-  },
+  siteMetadata: siteConfig,
   plugins: [
     `gatsby-plugin-eslint`,
     {
@@ -44,7 +35,7 @@ module.exports = {
             },
           },
           `gatsby-remark-prismjs`,
-          `gatsby-remark-copy-linked-files`
+          `gatsby-remark-copy-linked-files`,
         ],
       },
     },
@@ -54,20 +45,20 @@ module.exports = {
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
-        //trackingId: `ADD YOUR TRACKING ID HERE`,
+        trackingId: siteConfig.googleAnalyticsID,
       },
     },
     `gatsby-plugin-feed`,
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `Seth Reid Website`,
-        short_name: `SethReid`,
-        start_url: `/`,
-        background_color: `#ffffff`,
-        theme_color: `#B6131B`,
+        name: siteConfig.title,
+        short_name: siteConfig.titleShort,
+        start_url: siteConfig.pathPrefix,
+        background_color: siteConfig.backgroundColor,
+        theme_color: siteConfig.theme_color,
         display: `minimal-ui`,
-        icon: `src/assets/icons/site-logo.svg`,
+        icon: `${__dirname}/src/assets/icons/site-logo.svg`,
       },
     },
     // this (optional) plugin enables Progressive Web App + Offline functionality

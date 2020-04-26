@@ -1,9 +1,8 @@
 const siteConfig = {
   title: "Seth Reid",
   titleShort: "Seth Reid",
-  titleAlt: "Seth Reid",
   description: "For the writings of Seth Reid.",
-  logo: "/src/assets/icons/site-logo.png",
+  logo: "/src/assets/icons/site-logo.svg",
   url: "https://sethreid-website.netlify.com",
   github: "https://github.com/sethreidnz/sethreid-website",
   pathPrefix: "/",
@@ -14,29 +13,10 @@ const siteConfig = {
   author: {
     name: "Seth Reid",
     summary: "Technologist, musician, writer and creative.",
+    twitter: "sethreidnz",
+    email: "contact@sethreid.co.nz",
+    linkedIn: "sethreidnz",
   },
-  userLinks: [
-    {
-      label: "GitHub",
-      url: "https://github.com/sethreidnz",
-      iconClassName: "fa fa-github",
-    },
-    {
-      label: "Twitter",
-      url: "https://twitter.com/sethreidnz",
-      iconClassName: "fa fa-twitter",
-    },
-    {
-      label: "Email",
-      url: "mailto:contact@sethreid.co.nz",
-      iconClassName: "fa fa-envelope",
-    },
-    {
-      label: "LinkedIn",
-      url: "https://www.linkedin.com/in/sethreidnz/",
-      iconClassName: "fa fa-linkedin-in",
-    },
-  ],
   topics: [
     {
       title: "Web Development",
@@ -62,4 +42,4 @@ const siteConfig = {
   ],
 };
 
-export default siteConfig;
+module.exports = siteConfig;

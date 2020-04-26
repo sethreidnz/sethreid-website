@@ -13,7 +13,16 @@ const ArticleTemplate = ({ data, pageContext, location }) => {
 
   return (
     <Layout location={location} title={siteTitle}>
-      <SEO title={article.title} description={article.excerpt} />
+      <SEO
+        title={article.title}
+        description={article.excerpt}
+        postMeta={{
+          title: article.title,
+          description: article.excerpt,
+          image: article.cover,
+          path: article.path,
+        }}
+      />
       <article>
         <header>
           <h1>{article.title}</h1>

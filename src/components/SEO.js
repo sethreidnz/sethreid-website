@@ -2,16 +2,22 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Helmet } from "react-helmet";
 import { useStaticQuery, graphql } from "gatsby";
+import urljoin from "url-join";
 
-const SEO = ({ description, title, lang, meta, postSeo }) => {
-  const { site } = useStaticQuery(
+const SEO = ({ description, title, lang, meta, postMeta: articleMeta }) => {
+  const {
+    site: { siteMetadata },
+  } = useStaticQuery(
     graphql`
       query {
         site {
           siteMetadata {
             title
             description
-            social {
+            logo
+            url
+            pathPrefix
+            author {
               twitter
             }
           }
@@ -20,20 +26,77 @@ const SEO = ({ description, title, lang, meta, postSeo }) => {
     `
   );
 
-  const metaDescription = description || site.siteMetadata.description;
+  // defaults
+  const siteUrl = urljoin(siteMetadata.url, siteMetadata.pathPrefix);
+  let siteTitle = siteMetadata.title;
+  let siteDescription = siteMetadata.description;
+  let siteImage = siteMetadata.logo;
+  let metaTitle = siteTitle;
+  let metaDescription = siteDescription;
+  let metaImage = siteImage;
+  let pageUrl = siteUrl;
+  const schemaOrgJSONLD = [
+    {
+      "@context": "http://schema.org",
+      "@type": "WebSite",
+      url: siteUrl,
+      name: siteTitle,
+    },
+  ];
+
+  // if the page is an article
+  if (articleMeta) {
+    metaTitle = articleMeta.title;
+    metaDescription = articleMeta.description;
+    metaImage = articleMeta.logo;
+    pageUrl = urljoin(siteUrl, articleMeta.path);
+    schemaOrgJSONLD.push(
+      {
+        "@context": "http://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            item: {
+              "@id": pageUrl,
+              name: title,
+              metaImage,
+            },
+          },
+        ],
+      },
+      {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        url: pageUrl,
+        name: title,
+        headline: title,
+        image: {
+          "@type": "ImageObject",
+          url: metaImage,
+        },
+        description,
+      }
+    );
+  }
 
   return (
     <Helmet
       htmlAttributes={{
         lang,
       }}
-      title={title}
-      titleTemplate={`%s | ${site.siteMetadata.title}`}
+      title={metaTitle}
+      titleTemplate={`%s | ${siteTitle}`}
       defer={false}
       meta={[
         {
           name: `description`,
           content: metaDescription,
+        },
+        {
+          name: `image`,
+          content: metaImage,
         },
         {
           property: `og:title`,
@@ -42,6 +105,10 @@ const SEO = ({ description, title, lang, meta, postSeo }) => {
         {
           property: `og:description`,
           content: metaDescription,
+        },
+        {
+          property: `og:image`,
+          content: metaImage,
         },
         {
           property: `og:type`,
@@ -53,7 +120,7 @@ const SEO = ({ description, title, lang, meta, postSeo }) => {
         },
         {
           name: `twitter:creator`,
-          content: site.siteMetadata.social.twitter,
+          content: siteMetadata.author,
         },
         {
           name: `twitter:title`,
@@ -64,7 +131,19 @@ const SEO = ({ description, title, lang, meta, postSeo }) => {
           content: metaDescription,
         },
       ].concat(meta)}
-    />
+    >
+      {/* Schema.org tags */}
+      <script type="application/ld+json">
+        {JSON.stringify(schemaOrgJSONLD)}
+      </script>
+
+      {/* Twitter Card tags */}
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta
+        name="twitter:creator"
+        content={siteMetadata.author.twitter ? siteMetadata.author.twitter : ""}
+      />
+    </Helmet>
   );
 };
 
