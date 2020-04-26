@@ -44,8 +44,7 @@ module.exports = {
             },
           },
           `gatsby-remark-prismjs`,
-          `gatsby-remark-copy-linked-files`,
-          `gatsby-remark-smartypants`,
+          `gatsby-remark-copy-linked-files`
         ],
       },
     },
@@ -68,7 +67,7 @@ module.exports = {
         background_color: `#ffffff`,
         theme_color: `#B6131B`,
         display: `minimal-ui`,
-        icon: `content/assets/icons/icon-site.svg`,
+        icon: `src/assets/icons/site-logo.svg`,
       },
     },
     // this (optional) plugin enables Progressive Web App + Offline functionality

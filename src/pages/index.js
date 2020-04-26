@@ -2,14 +2,14 @@ import React from "react";
 import { graphql } from "gatsby";
 
 // local imports
-import { getArticlesFromPostEdges } from "../utilities/article";
+import { getArticlesFromArticleEdges } from "../utilities/article";
 import Layout from "../components/Layout";
 import SEO from "../components/SEO";
 import ArticleList from "../components/ArticleList";
 
 const BlogIndex = ({ data, location }) => {
   const siteTitle = data.site.siteMetadata.title;
-  const articles = getArticlesFromPostEdges(data.allMarkdownRemark.edges);
+  const articles = getArticlesFromArticleEdges(data.allMarkdownRemark.edges);
 
   return (
     <Layout location={location} title={siteTitle}>

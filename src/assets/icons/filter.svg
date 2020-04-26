@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 12">
+  <defs>
+    <style>
+      .filter_path {
+        fill: #b6131b;
+      }
+    </style>
+  </defs>
+  <title>SR</title>
+  <g id="Layer_1" data-name="Layer 1">
+    <path class="filter_path" d="M18,10H12v2h6ZM0,0V2H18V0ZM18,5H6V7H18Z"/>
+  </g>
+</svg>

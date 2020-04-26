@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
+  <defs>
+    <style>
+      .web_path_1 {
+        fill: #b6131b;
+      }
+
+      .web_path_2 {
+        fill: #890e14;
+      }
+
+      .web_path_3 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <title>SR</title>
+  <g id="Layer_1" data-name="Layer 1">
+    <g>
+      <circle class="web_path_1" cx="25" cy="25" r="25"/>
+      <path class="web_path_2" d="M.61,30.48A25,25,0,0,0,19.53,49.39l16-16-.38-13.83-20.65-3Z"/>
+      <path class="web_path_3" d="M34,16H16a2.24,2.24,0,0,0-2.24,2.25v13.5A2.25,2.25,0,0,0,16,34H34a2.25,2.25,0,0,0,2.25-2.25V18.25A2.25,2.25,0,0,0,34,16ZM28.38,31.75H16v-4.5H28.38Zm0-5.63H16v-4.5H28.38ZM34,31.75H29.5V21.62H34Z"/>
+    </g>
+  </g>
+</svg>

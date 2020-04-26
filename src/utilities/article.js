@@ -1,13 +1,20 @@
-export const getArticleFromPostEdge = (postEdge) => ({
-  path: `articles/${postEdge.node.fields.slug}`,
-  tags: postEdge.node.frontmatter.tags,
-  // topics: postEdge.node.frontmatter.topics,
-  // cover: postEdge.node.frontmatter.cover,
-  title: postEdge.node.frontmatter.title,
-  date: postEdge.node.fields.date,
-  excerpt: postEdge.node.excerpt,
-  // timeToRead: postEdge.node.timeToRead,
+export const getArticleFromArticleNode = (node) => ({
+  path: `/articles${node.fields.slug}`,
+  slug: node.fields.slug,
+  tags:
+    node.frontmatter.tags && node.frontmatter.tags.isArray
+      ? node.frontmatter.tags
+      : [],
+  topics:
+    node.frontmatter.topics && node.frontmatter.topics.isArray
+      ? node.frontmatter.topics
+      : [],
+  cover: node.frontmatter.cover,
+  title: node.frontmatter.title,
+  date: node.frontmatter.date,
+  excerpt: node.excerpt,
+  html: node.html,
 });
 
-export const getArticlesFromPostEdges = (postEdges) =>
-  postEdges.map((postEdge) => getArticleFromPostEdge(postEdge));
+export const getArticlesFromArticleEdges = (articleEdges) =>
+  articleEdges.map((postEdge) => getArticleFromArticleNode(postEdge.node));

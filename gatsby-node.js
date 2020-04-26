@@ -31,7 +31,7 @@ exports.createPages = async ({ graphql, actions }) => {
     throw result.errors;
   }
 
-  // Create blog posts pages.
+  // Create page for each article.
   const articles = result.data.allMarkdownRemark.edges;
 
   articles.forEach((article, index) => {
