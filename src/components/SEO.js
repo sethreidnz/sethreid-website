@@ -15,7 +15,7 @@ const SEO = ({ description, title, lang, meta, postMeta: articleMeta }) => {
             title
             description
             logo
-            url
+            siteUrl
             pathPrefix
             author {
               twitter
@@ -27,7 +27,7 @@ const SEO = ({ description, title, lang, meta, postMeta: articleMeta }) => {
   );
 
   // defaults
-  const siteUrl = urljoin(siteMetadata.url, siteMetadata.pathPrefix);
+  const siteUrl = urljoin(siteMetadata.siteUrl, siteMetadata.pathPrefix);
   let siteTitle = siteMetadata.title;
   let siteDescription = siteMetadata.description;
   let siteImage = siteMetadata.logo;

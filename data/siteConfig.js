@@ -3,7 +3,7 @@ const siteConfig = {
   titleShort: "Seth Reid",
   description: "For the writings of Seth Reid.",
   logo: "/src/assets/icons/site-logo.svg",
-  url: "https://sethreid-website.netlify.com",
+  siteUrl: "https://sethreid-website.netlify.com",
   github: "https://github.com/sethreidnz/sethreid-website",
   pathPrefix: "/",
   rss: "/rss.xml",
