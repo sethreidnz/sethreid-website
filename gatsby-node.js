@@ -1,5 +1,9 @@
 const path = require(`path`);
-const { createFilePath } = require(`gatsby-source-filesystem`);
+const { paginate } = require("gatsby-awesome-pagination");
+const { createFilePath } = require("gatsby-source-filesystem");
+
+// local imports
+const siteMetadata = require("./data/siteConfig");
 
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions;
@@ -13,18 +17,6 @@ exports.createPages = async ({ graphql, actions }) => {
   const contentQuery = await graphql(
     `
       {
-        site {
-          siteMetadata {
-            resultsPerPage
-            articlePathPrefix
-            topics {
-              title
-              slug
-              description
-              cover
-            }
-          }
-        }
         allMdx(
           sort: { fields: [frontmatter___date], order: DESC }
           limit: 1000
@@ -50,7 +42,6 @@ exports.createPages = async ({ graphql, actions }) => {
   }
 
   const articles = contentQuery.data.allMdx.edges;
-  const siteMetadata = contentQuery.data.site.siteMetadata;
   const articlePathPrefix = siteMetadata.articlePathPrefix;
   const [tagSet, topicSet] = getTagsAndTopics(articles);
 
@@ -74,27 +65,18 @@ exports.createPages = async ({ graphql, actions }) => {
 
   // create the post listing pages
   const resultsPerPage = siteMetadata.resultsPerPage;
-  const numberOfPages = Math.ceil(articles.length / resultsPerPage);
-  for (let index = 0; index < numberOfPages; index++) {
-    let articleListPage = {
-      path:
-        index === 0
-          ? `${articlePathPrefix}`
-          : `${articlePathPrefix}/${index + 1}`,
-      component: articleListTemplate,
-      context: {
-        limit: resultsPerPage,
-        skip: index * resultsPerPage,
-        numPages: numberOfPages,
-        currentPage: index + 1,
-      },
-    };
-    createPage(articleListPage);
-  }
+  paginate({
+    createPage,
+    items: articles,
+    itemsPerPage: resultsPerPage,
+    pathPrefix: articlePathPrefix,
+    component: articleListTemplate,
+  });
 };
 
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions;
+
   if (node.internal.type === `Mdx`) {
     const value = createFilePath({ node, getNode });
     createNodeField({
@@ -103,6 +85,20 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
       value,
     });
   }
+};
+
+exports.onCreatePage = async ({ page, actions }) => {
+  const { createPage, deletePage } = actions;
+  const resultsPerPage = siteMetadata.resultsPerPage;
+
+  deletePage(page);
+  createPage({
+    ...page,
+    context: {
+      ...page.context,
+      resultsPerPage,
+    },
+  });
 };
 
 const getTagsAndTopics = (articles) => {

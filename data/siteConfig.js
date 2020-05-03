@@ -12,7 +12,7 @@ const siteConfig = {
   googleAnalyticsID: "",
   themeColor: "#B6131B",
   backgroundColor: "#ffffff",
-  resultsPerPage: "2",
+  resultsPerPage: 2,
   articlePathPrefix: "/articles",
   author: {
     name: "Seth Reid",
