@@ -4,7 +4,15 @@ import { Helmet } from "react-helmet";
 import { useStaticQuery, graphql } from "gatsby";
 import urljoin from "url-join";
 
-const SEO = ({ description, title, lang, meta, postMeta: articleMeta }) => {
+const SEO = ({
+  title,
+  description,
+  path,
+  cover,
+  lang,
+  meta,
+  postMeta: articleMeta,
+}) => {
   const {
     site: { siteMetadata },
   } = useStaticQuery(
@@ -31,10 +39,10 @@ const SEO = ({ description, title, lang, meta, postMeta: articleMeta }) => {
   let siteTitle = siteMetadata.title;
   let siteDescription = siteMetadata.description;
   let siteImage = siteMetadata.logo;
-  let metaTitle = siteTitle;
+  let metaTitle = title;
   let metaDescription = siteDescription;
-  let metaImage = siteImage;
-  let pageUrl = siteUrl;
+  let metaImage = cover ? cover : siteImage;
+  let pageUrl = path ? urljoin(siteUrl, path) : siteUrl;
   const schemaOrgJSONLD = [
     {
       "@context": "http://schema.org",
@@ -50,36 +58,37 @@ const SEO = ({ description, title, lang, meta, postMeta: articleMeta }) => {
     metaDescription = articleMeta.description;
     metaImage = articleMeta.logo;
     pageUrl = urljoin(siteUrl, articleMeta.path);
-    schemaOrgJSONLD.push(
-      {
-        "@context": "http://schema.org",
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          {
-            "@type": "ListItem",
-            position: 1,
-            item: {
-              "@id": pageUrl,
-              name: title,
-              metaImage,
-            },
-          },
-        ],
-      },
-      {
-        "@context": "http://schema.org",
-        "@type": "BlogPosting",
-        url: pageUrl,
-        name: title,
-        headline: title,
-        image: {
-          "@type": "ImageObject",
-          url: metaImage,
-        },
-        description,
-      }
-    );
   }
+
+  schemaOrgJSONLD.push(
+    {
+      "@context": "http://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          item: {
+            "@id": pageUrl,
+            name: title,
+            metaImage,
+          },
+        },
+      ],
+    },
+    {
+      "@context": "http://schema.org",
+      "@type": "BlogPosting",
+      url: pageUrl,
+      name: title,
+      headline: title,
+      image: {
+        "@type": "ImageObject",
+        url: metaImage,
+      },
+      description,
+    }
+  );
 
   return (
     <Helmet

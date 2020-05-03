@@ -15,6 +15,8 @@ exports.createPages = async ({ graphql, actions }) => {
       {
         site {
           siteMetadata {
+            resultsPerPage
+            articlePathPrefix
             topics {
               title
               slug
@@ -57,8 +59,7 @@ exports.createPages = async ({ graphql, actions }) => {
     const previous =
       index === articles.length - 1 ? null : articles[index + 1].node;
     const next = index === 0 ? null : articles[index - 1].node;
-
-    createPage({
+    let articlePage = {
       path: `${articlePathPrefix}${article.node.fields.slug}`,
       component: articleTemplate,
       context: {
@@ -66,24 +67,30 @@ exports.createPages = async ({ graphql, actions }) => {
         previous,
         next,
       },
-    });
+    };
+
+    createPage(articlePage);
   });
 
   // create the post listing pages
   const resultsPerPage = siteMetadata.resultsPerPage;
   const numberOfPages = Math.ceil(articles.length / resultsPerPage);
-  Array.from({ length: numberOfPages }).forEach((v, i) => {
-    createPage({
-      path: i === 0 ? `${articlePathPrefix}` : `${articlePathPrefix}/${i + 1}`,
+  for (let index = 0; index < numberOfPages; index++) {
+    let articleListPage = {
+      path:
+        index === 0
+          ? `${articlePathPrefix}`
+          : `${articlePathPrefix}/${index + 1}`,
       component: articleListTemplate,
       context: {
         limit: resultsPerPage,
-        skip: i * resultsPerPage,
+        skip: index * resultsPerPage,
         numPages: numberOfPages,
-        currentPage: i + 1,
+        currentPage: index + 1,
       },
-    });
-  });
+    };
+    createPage(articleListPage);
+  }
 };
 
 exports.onCreateNode = ({ node, actions, getNode }) => {

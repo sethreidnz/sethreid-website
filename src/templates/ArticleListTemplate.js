@@ -1,27 +1,22 @@
 import React from "react";
-import { graphql } from "gatsby";
 
-// local components
-import Layout from "../layout";
+//local imports
+import { getArticlesFromArticleEdges } from "../utilities/article";
+import Layout from "../components/Layout";
 import SEO from "../components/SEO";
-import ArticleList from "../components/ArticleList";
 
 const ArticleListTemplate = ({
-  location: { pathname },
-  data: {
-    allMdx: { edges },
-  },
-  pageContext
+  location: { path },
+  pageContext: { currentPage },
 }) => {
   return (
     <Layout>
       <SEO
-        title="Articles"
-        description="Lorum ipsum"
-        cover="https://spaceholder.cc/400x300"
-        path={pathname}
+        title={`Articles Page ${currentPage}`}
+        description="Lorem Ipsum"
+        path={path}
       />
-      Topics
+      Hello
     </Layout>
   );
 };
