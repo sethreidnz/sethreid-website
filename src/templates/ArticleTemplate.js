@@ -13,7 +13,7 @@ import SEO from "../components/SEO";
 const ArticleTemplate = ({ data, pageContext }) => {
   const { previous, next } = pageContext;
   const article = getArticleFromArticleNode(data.mdx);
-
+  debugger;
   return (
     <Layout>
       <SEO
