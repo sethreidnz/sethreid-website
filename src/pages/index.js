@@ -9,7 +9,7 @@ import ArticleList from "../components/ArticleList";
 
 const BlogIndex = ({ data, location }) => {
   const siteTitle = data.site.siteMetadata.title;
-  const articles = getArticlesFromArticleEdges(data.allMarkdownRemark.edges);
+  const articles = getArticlesFromArticleEdges(data.allMdx.edges);
 
   return (
     <Layout location={location} title={siteTitle}>
@@ -28,7 +28,7 @@ export const pageQuery = graphql`
         title
       }
     }
-    allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
+    allMdx(sort: { fields: [frontmatter___date], order: DESC }) {
       edges {
         node {
           excerpt

@@ -13,7 +13,7 @@ export const getArticleFromArticleNode = (node) => ({
   title: node.frontmatter.title,
   date: node.frontmatter.date,
   excerpt: node.excerpt,
-  html: node.html,
+  body: node.body,
 });
 
 export const getArticlesFromArticleEdges = (articleEdges) =>

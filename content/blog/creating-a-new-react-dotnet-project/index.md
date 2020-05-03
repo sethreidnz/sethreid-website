@@ -31,25 +31,25 @@ Let's get straight to it with a step by step guide to creating a new ReactJS pro
 
     > **Note:** replace `MyNewProject` with the name of your new project
 
-    ``` bash
+    ``` sh
     dotnet new react -n MyNewProject
     ```
 
 1. Change directory into your new project:
 
-    ``` bash
+    ``` sh
     cd MyNewProject
     ```
 
 1. Run the following to delete the existing ReactJS app that was created:
 
-    ``` bash
+    ``` sh
     rm -rf ClientApp
     ```
 
 1. **Optional step:** If you want to create a Git repository for the project make sure you do it now since Create React App will create one in it's output folder in the next step if you don't. Run the following
 
-    ``` bash
+    ``` sh
     git init
     ```
 

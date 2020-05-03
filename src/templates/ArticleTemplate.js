@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, graphql } from "gatsby";
+import { MDXRenderer } from "gatsby-plugin-mdx";
 
 // local imports
 import { getArticleFromArticleNode } from "../utilities/article";
@@ -9,7 +10,8 @@ import SEO from "../components/SEO";
 const ArticleTemplate = ({ data, pageContext, location }) => {
   const siteTitle = data.site.siteMetadata.title;
   const { previous, next } = pageContext;
-  const article = getArticleFromArticleNode(data.markdownRemark);
+  debugger;
+  const article = getArticleFromArticleNode(data.mdx);
 
   return (
     <Layout location={location} title={siteTitle}>
@@ -28,7 +30,9 @@ const ArticleTemplate = ({ data, pageContext, location }) => {
           <h1>{article.title}</h1>
           <p>{article.date}</p>
         </header>
-        <section dangerouslySetInnerHTML={{ __html: article.html }} />
+        <section>
+          <MDXRenderer>{article.body}</MDXRenderer>
+        </section>
         <hr />
       </article>
 
@@ -63,10 +67,10 @@ export const pageQuery = graphql`
         title
       }
     }
-    markdownRemark(fields: { slug: { eq: $slug } }) {
+    mdx(fields: { slug: { eq: $slug } }) {
       id
       excerpt(pruneLength: 160)
-      html
+      body
       fields {
         slug
       }

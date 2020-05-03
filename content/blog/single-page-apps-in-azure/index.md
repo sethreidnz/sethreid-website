@@ -50,13 +50,13 @@ This can be achieved by using the existing [dotenv](https://www.npmjs.com/packag
 
 In `src/client/.env`:
 
-```lang-bash
+```lang-sh
 REACT_APP_API_HOST=http://localhost:5000/
 ```
 
 In `src/client/.env.production`:
 
-```lang-bash
+```lang-sh
 REACT_APP_API_HOST=/
 ```
 
@@ -64,7 +64,7 @@ This means if you use this variable, `process.env.REACT_APP_API_HOST`, in your a
 
 As I mentioned if you had development server at `https://my-development-server.azurewebsites.net`, you could get frontend developers to add the file `src/client/.env.local` with the following content and they wouldn't need to worry about the API project at all:
 
-```lang-bash
+```lang-sh
 REACT_APP_API_HOST=https://my-development-server.azurewebsites.net/
 ```
 

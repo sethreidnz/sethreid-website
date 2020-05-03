@@ -79,7 +79,7 @@ First I have defined a script that will run the install and build for the React 
     pushd $(projectFolder) && npm run build && popd
 ```
 
-Notice how I have used the powershell syntax `$(projectFolder)` to use variables I defined earlier. These scripts can be used to script any task and on Linux/MacOS will run using bash, while on Windows they will use cmd.exe.
+Notice how I have used the powershell syntax `$(projectFolder)` to use variables I defined earlier. These scripts can be used to script any task and on Linux/MacOS will run using sh, while on Windows they will use cmd.exe.
 
 #### Running build in tasks
 
