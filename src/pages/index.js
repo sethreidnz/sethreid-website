@@ -7,19 +7,18 @@ import Layout from "../components/Layout";
 import SEO from "../components/SEO";
 import ArticleList from "../components/ArticleList";
 
-const BlogIndex = ({ data, location }) => {
-  const siteTitle = data.site.siteMetadata.title;
+const SiteIndex = ({ data, location }) => {
   const articles = getArticlesFromArticleEdges(data.allMdx.edges);
 
   return (
-    <Layout location={location} title={siteTitle}>
+    <Layout>
       <SEO title="All posts" />
       <ArticleList title="All Posts" articles={articles} />
     </Layout>
   );
 };
 
-export default BlogIndex;
+export default SiteIndex;
 
 export const pageQuery = graphql`
   query {

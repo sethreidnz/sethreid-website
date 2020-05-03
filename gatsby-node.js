@@ -4,21 +4,37 @@ const { createFilePath } = require(`gatsby-source-filesystem`);
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions;
 
+  // template paths
   const articleTemplate = path.resolve(`./src/templates/ArticleTemplate.js`);
-  const result = await graphql(
+  const articleListTemplate = path.resolve(
+    `./src/templates/ArticleListTemplate.js`
+  );
+
+  const contentQuery = await graphql(
     `
       {
+        site {
+          siteMetadata {
+            topics {
+              title
+              slug
+              description
+              cover
+            }
+          }
+        }
         allMdx(
           sort: { fields: [frontmatter___date], order: DESC }
           limit: 1000
         ) {
           edges {
             node {
+              frontmatter {
+                tags
+                topics
+              }
               fields {
                 slug
-              }
-              frontmatter {
-                title
               }
             }
           }
@@ -27,25 +43,44 @@ exports.createPages = async ({ graphql, actions }) => {
     `
   );
 
-  if (result.errors) {
-    throw result.errors;
+  if (contentQuery.errors) {
+    throw contentQuery.errors;
   }
 
-  // Create page for each article.
-  const articles = result.data.allMdx.edges;
+  const articles = contentQuery.data.allMdx.edges;
+  const siteMetadata = contentQuery.data.site.siteMetadata;
+  const articlePathPrefix = siteMetadata.articlePathPrefix;
+  const [tagSet, topicSet] = getTagsAndTopics(articles);
 
+  // Create page for each article.
   articles.forEach((article, index) => {
     const previous =
       index === articles.length - 1 ? null : articles[index + 1].node;
     const next = index === 0 ? null : articles[index - 1].node;
 
     createPage({
-      path: `/articles${article.node.fields.slug}`,
+      path: `${articlePathPrefix}${article.node.fields.slug}`,
       component: articleTemplate,
       context: {
         slug: article.node.fields.slug,
         previous,
         next,
+      },
+    });
+  });
+
+  // create the post listing pages
+  const resultsPerPage = siteMetadata.resultsPerPage;
+  const numberOfPages = Math.ceil(articles.length / resultsPerPage);
+  Array.from({ length: numberOfPages }).forEach((v, i) => {
+    createPage({
+      path: i === 0 ? `${articlePathPrefix}` : `${articlePathPrefix}/${i + 1}`,
+      component: articleListTemplate,
+      context: {
+        limit: resultsPerPage,
+        skip: i * resultsPerPage,
+        numPages: numberOfPages,
+        currentPage: i + 1,
       },
     });
   });
@@ -61,4 +96,22 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
       value,
     });
   }
+};
+
+const getTagsAndTopics = (articles) => {
+  const tagSet = new Set();
+  const topicSet = new Set();
+  articles.forEach((edge) => {
+    if (edge.node.frontmatter.tags) {
+      edge.node.frontmatter.tags.forEach((tag) => {
+        tagSet.add(tag);
+      });
+    }
+    if (edge.node.frontmatter.topics) {
+      edge.node.frontmatter.topics.forEach((tag) => {
+        topicSet.add(tag);
+      });
+    }
+  });
+  return [tagSet, topicSet];
 };

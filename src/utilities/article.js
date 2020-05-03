@@ -1,4 +1,4 @@
-const articlePathPrefix = `/articles`;
+import siteConfig from "../../data/siteConfig";
 
 export const getArticleFromArticleNode = (node) => ({
   path: getArticlePath(node.fields.slug),
@@ -21,4 +21,5 @@ export const getArticleFromArticleNode = (node) => ({
 export const getArticlesFromArticleEdges = (articleEdges) =>
   articleEdges.map((postEdge) => getArticleFromArticleNode(postEdge.node));
 
-export const getArticlePath = (slug) => `${articlePathPrefix}${slug}`;
+export const getArticlePath = (slug) =>
+  `${siteConfig.articlePathPrefix}${slug}`;

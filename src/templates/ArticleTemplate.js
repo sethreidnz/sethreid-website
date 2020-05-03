@@ -10,14 +10,12 @@ import {
 import Layout from "../components/Layout";
 import SEO from "../components/SEO";
 
-const ArticleTemplate = ({ data, pageContext, location }) => {
-  const siteTitle = data.site.siteMetadata.title;
+const ArticleTemplate = ({ data, pageContext }) => {
   const { previous, next } = pageContext;
-  debugger;
   const article = getArticleFromArticleNode(data.mdx);
 
   return (
-    <Layout location={location} title={siteTitle}>
+    <Layout>
       <SEO
         title={article.title}
         description={article.excerpt}
