@@ -3,7 +3,10 @@ import { Link, graphql } from "gatsby";
 import { MDXRenderer } from "gatsby-plugin-mdx";
 
 // local imports
-import { getArticleFromArticleNode } from "../utilities/article";
+import {
+  getArticleFromArticleNode,
+  getArticlePath,
+} from "../utilities/article";
 import Layout from "../components/Layout";
 import SEO from "../components/SEO";
 
@@ -40,14 +43,14 @@ const ArticleTemplate = ({ data, pageContext, location }) => {
         <ul>
           {previous && (
             <li>
-              <Link to={previous.fields.slug} rel="prev">
+              <Link to={getArticlePath(previous.fields.slug)} rel="prev">
                 ← {previous.frontmatter.title}
               </Link>
             </li>
           )}
           {next && (
             <li>
-              <Link to={next.fields.slug} rel="next">
+              <Link to={getArticlePath(next.fields.slug)} rel="next">
                 {next.frontmatter.title} →
               </Link>
             </li>

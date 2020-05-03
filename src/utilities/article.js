@@ -1,5 +1,7 @@
+const articlePathPrefix = `/articles`;
+
 export const getArticleFromArticleNode = (node) => ({
-  path: `/articles${node.fields.slug}`,
+  path: getArticlePath(node.fields.slug),
   slug: node.fields.slug,
   tags:
     node.frontmatter.tags && node.frontmatter.tags.isArray
@@ -18,3 +20,5 @@ export const getArticleFromArticleNode = (node) => ({
 
 export const getArticlesFromArticleEdges = (articleEdges) =>
   articleEdges.map((postEdge) => getArticleFromArticleNode(postEdge.node));
+
+export const getArticlePath = (slug) => `${articlePathPrefix}${slug}`;
