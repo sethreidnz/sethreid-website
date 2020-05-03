@@ -14,7 +14,7 @@ const ArticleList = ({
   <>
     {title ? (
       <h2>
-        {title} - {currentPage}
+        {title} {currentPage !== null ? `- ${currentPage}` : ""}
       </h2>
     ) : (
       ""
@@ -62,6 +62,7 @@ const ArticleList = ({
 );
 
 ArticleList.defaultProps = {
+  currentPage: null,
   nextPagePath: null,
   nextPageText: "Next →",
   previousPagePath: null,
@@ -79,7 +80,7 @@ ArticleList.propTypes = {
       excerpt: PropTypes.string.isRequired,
     })
   ),
-  currentPage: PropTypes.number.isRequired,
+  currentPage: PropTypes.number,
   nextPagePath: PropTypes.string,
   nextPageText: PropTypes.string,
   previousPagePath: PropTypes.string,
