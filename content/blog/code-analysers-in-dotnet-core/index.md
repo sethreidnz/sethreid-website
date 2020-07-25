@@ -7,7 +7,7 @@ date: "2017-12-03"
 topics:
     - "web-development"
 tags:
-    - ".NET Core"
+    - "dotnet-core"
 ---
 
 I'm a huge fan of coding standards, but I'm not a big fan of having to enforce them myself. This article is here to show you how to setup automatic code analysis using the new Rosyln anaysers and the ports of the classic StyleCop rule sets. If you want to see a basic .NET application with all this setup then you can [find it here](https://github.com/sethreidnz/dotnet-code-analysis).

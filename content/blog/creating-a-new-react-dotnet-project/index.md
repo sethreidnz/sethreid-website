@@ -7,9 +7,9 @@ date: "2019-06-02"
 topics: 
     - "web-development"
 tags:
-    - "JavaScript"
-    - "React"
-    - "C#"
+    - "javascript"
+    - "react"
+    - "csharp"
 ---
 
 The .NET Core CLI makes it really easy to create a new projects with .NET Core. By running `dotnet new react` you get a basic .NET Core MVC app setup to serve and build a React app using [Create React App](https://facebook.github.io/create-react-app/). This is great, and I believe is the best way to create a new React project with .NET, however as of .NET Core 2 the template outputs an out-of-date version of a basic ReactJS app created with Create React App. This article is a step by step guide to how to still use this template but have the latest version of Create React App's output in your project.

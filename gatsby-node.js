@@ -4,6 +4,10 @@ const { createFilePath } = require("gatsby-source-filesystem");
 
 // local imports
 const siteMetadata = require("./data/siteConfig");
+const siteTags = require("./data/tags");
+const siteTagSlugs = siteTags.map((tag) => tag.slug);
+const siteTopics = require("./data/topics");
+const siteTopicSlugs = siteTopics.map((topic) => topic.slug);
 
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions;
@@ -105,17 +109,53 @@ exports.onCreatePage = async ({ page, actions }) => {
 const getTagsAndTopics = (articles) => {
   const tagSet = new Set();
   const topicSet = new Set();
+  const validationErrors = [];
   articles.forEach((edge) => {
+    let articleValidationErrors = [];
     if (edge.node.frontmatter.tags) {
       edge.node.frontmatter.tags.forEach((tag) => {
-        tagSet.add(tag);
+        if (tagSlugIsValid(tag)) {
+          tagSet.add(tag);
+        } else {
+          articleValidationErrors.push(`Invalid tag '${tag}'`);
+        }
       });
     }
+
     if (edge.node.frontmatter.topics) {
       edge.node.frontmatter.topics.forEach((tag) => {
-        topicSet.add(tag);
+        if (topicSlugIsValid(tag)) {
+          topicSet.add(tag);
+        } else {
+          articleValidationErrors.push(`Invalid topic '${tag}'`);
+        }
+      });
+    }
+
+    if (articleValidationErrors.length > 0) {
+      validationErrors.push({
+        articleEdge: edge,
+        errors: articleValidationErrors,
       });
     }
   });
+
+  if (validationErrors.length > 0) {
+    const errorMessages = validationErrors.map((articleValidationError) => {
+      return `
+      Article with slug ${
+        articleValidationError.articleEdge.node.fields.slug
+      } has the following error \n\n
+        ${articleValidationError.errors.map((error) => `- ${error}`)}
+      `;
+    });
+    errorMessages.forEach((message) => console.error(message));
+    throw new Error(
+      "There were errors in the tags or topics. See above for details"
+    );
+  }
   return [tagSet, topicSet];
 };
+
+const tagSlugIsValid = (tag) => siteTagSlugs.includes(tag);
+const topicSlugIsValid = (tag) => siteTopicSlugs.includes(tag);

@@ -7,7 +7,7 @@ date: "2017-03-17"
 topics: 
     - "web-development"
 tags:
-    - "JavaScript"
+    - "javascript"
 ---
 
 I often reflect on my interesting position of being an avid fan of type systems and precompiled production code, while primarily being a JavaScript developer. Especially as the ever changing landscape of the web development world keeps morphing slowly into something that is completely different... But somewhat familiar.
