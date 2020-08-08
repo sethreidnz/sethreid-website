@@ -1,8 +1,8 @@
 import siteConfig from "../../data/siteConfig";
 
 export const getArticleFromArticleNode = (node) => ({
-  path: getArticlePath(node.fields.slug),
-  slug: node.fields.slug,
+  path: getArticlePath(node.frontmatter.slug),
+  slug: node.frontmatter.slug,
   tags:
     node.frontmatter.tags && node.frontmatter.tags.isArray
       ? node.frontmatter.tags
@@ -22,4 +22,4 @@ export const getArticlesFromArticleEdges = (articleEdges) =>
   articleEdges.map((postEdge) => getArticleFromArticleNode(postEdge.node));
 
 export const getArticlePath = (slug) =>
-  `${siteConfig.articlePathPrefix}${slug}`;
+  `${siteConfig.articlePathPrefix}/${slug}`;

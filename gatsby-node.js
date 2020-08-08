@@ -20,21 +20,19 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const contentQuery = await graphql(
     `
-      query {
-        {
-          allMdx(
-            sort: { fields: [frontmatter___date], order: DESC }
-            limit: 1000
-          ) {
-            edges {
-              node {
-                id
-                frontmatter {
-                  title
-                  tags
-                  topics
-                  slug
-                }
+      {
+        allMdx(
+          sort: { fields: [frontmatter___date], order: DESC }
+          limit: 1000
+        ) {
+          edges {
+            node {
+              id
+              frontmatter {
+                title
+                tags
+                topics
+                slug
               }
             }
           }
@@ -57,12 +55,11 @@ exports.createPages = async ({ graphql, actions }) => {
       index === articles.length - 1 ? null : articles[index + 1].node;
     const next = index === 0 ? null : articles[index - 1].node;
     let articlePage = {
-      path: `${articlePathPrefix}${article.node.fields.slug}`,
+      path: `${articlePathPrefix}/${article.node.frontmatter.slug}`,
       component: articleTemplate,
       context: {
-        id: article.node.id,
-        slug: article.node.fields.slug,
-        date: article.node.fields.date,
+        slug: article.node.frontmatter.slug,
+        date: article.node.frontmatter.date,
         previous,
         next,
       },
