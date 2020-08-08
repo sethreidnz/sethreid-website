@@ -1,7 +1,7 @@
 ---
 title: "Delivering single page apps with ASPNET Core in Azure"
 description: "Test description"
-slug: ""
+slug: "delivering-single-page-apps-in-azure"
 cover: "https://unsplash.it/1152/300/?random?FaityWitch"
 date: "2018-08-06"
 topics:

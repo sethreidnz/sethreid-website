@@ -43,10 +43,8 @@ export const articleListTemplate = graphql`
       edges {
         node {
           excerpt
-          fields {
-            slug
-          }
           frontmatter {
+            slug
             date(formatString: "MMMM DD, YYYY")
             title
             description

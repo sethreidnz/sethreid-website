@@ -3,19 +3,18 @@ const siteConfig = require("./data/siteConfig");
 module.exports = {
   siteMetadata: siteConfig,
   plugins: [
-    `gatsby-plugin-eslint`,
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        path: `${__dirname}/content/blog`,
-        name: `blog`,
-      },
-    },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
         path: `${__dirname}/content/assets`,
         name: `assets`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `${__dirname}/content/articles`,
+        name: `articles`,
       },
     },
     {

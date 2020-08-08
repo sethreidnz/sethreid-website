@@ -1,10 +1,8 @@
 import React from "react";
-import { Link, graphql } from "gatsby";
 
 // local imports
 import Layout from "../components/Layout";
 import SEO from "../components/SEO";
-import ArticleList from "../components/ArticleList";
 
 const TopicsPageTemplate = ({ location: { pathname } }) => {
   return (

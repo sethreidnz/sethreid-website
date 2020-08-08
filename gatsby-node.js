@@ -27,12 +27,11 @@ exports.createPages = async ({ graphql, actions }) => {
         ) {
           edges {
             node {
+              id
               frontmatter {
                 title
                 tags
                 topics
-              }
-              fields {
                 slug
               }
             }
@@ -56,10 +55,11 @@ exports.createPages = async ({ graphql, actions }) => {
       index === articles.length - 1 ? null : articles[index + 1].node;
     const next = index === 0 ? null : articles[index - 1].node;
     let articlePage = {
-      path: `${articlePathPrefix}${article.node.fields.slug}`,
+      path: `${articlePathPrefix}/${article.node.frontmatter.slug}`,
       component: articleTemplate,
       context: {
-        slug: article.node.fields.slug,
+        slug: article.node.frontmatter.slug,
+        date: article.node.frontmatter.date,
         previous,
         next,
       },

@@ -12,8 +12,8 @@ import SEO from "../components/SEO";
 
 const ArticleTemplate = ({ data, pageContext }) => {
   const { previous, next } = pageContext;
-  const article = getArticleFromArticleNode(data.mdx);
   debugger;
+  const article = getArticleFromArticleNode(data.mdx);
   return (
     <Layout>
       <SEO
@@ -41,14 +41,14 @@ const ArticleTemplate = ({ data, pageContext }) => {
         <ul>
           {previous && (
             <li>
-              <Link to={getArticlePath(previous.fields.slug)} rel="prev">
+              <Link to={getArticlePath(previous.frontmatter.slug)} rel="prev">
                 ← {previous.frontmatter.title}
               </Link>
             </li>
           )}
           {next && (
             <li>
-              <Link to={getArticlePath(next.fields.slug)} rel="next">
+              <Link to={getArticlePath(next.frontmatter.slug)} rel="next">
                 {next.frontmatter.title} →
               </Link>
             </li>
@@ -62,19 +62,10 @@ const ArticleTemplate = ({ data, pageContext }) => {
 export default ArticleTemplate;
 
 export const pageQuery = graphql`
-  query BlogPostBySlug($slug: String!) {
-    site {
-      siteMetadata {
-        title
-      }
-    }
-    mdx(fields: { slug: { eq: $slug } }) {
-      id
+  query GetArticleBySlug($slug: String!) {
+    mdx(frontmatter: { slug: { eq: $slug } }) {
       excerpt(pruneLength: 160)
       body
-      fields {
-        slug
-      }
       frontmatter {
         title
         description
