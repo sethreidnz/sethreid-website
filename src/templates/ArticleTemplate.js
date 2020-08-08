@@ -13,7 +13,6 @@ import SEO from "../components/SEO";
 const ArticleTemplate = ({ data, pageContext }) => {
   const { previous, next } = pageContext;
   const article = getArticleFromArticleNode(data.mdx);
-  debugger;
   return (
     <Layout>
       <SEO
@@ -62,13 +61,13 @@ const ArticleTemplate = ({ data, pageContext }) => {
 export default ArticleTemplate;
 
 export const pageQuery = graphql`
-  query BlogPostBySlug($slug: String!) {
+  query AritcleQuery($id: String!) {
     site {
       siteMetadata {
         title
       }
     }
-    mdx(slug: { eq: $slug }) {
+    mdx(id: { eq: $id }) {
       excerpt(pruneLength: 160)
       body
       frontmatter {
